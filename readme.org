@@ -3,6 +3,28 @@
 Store a tree of values in a single file and retrieve them by key, or
 by a set of keys (as a path).
 
+Sorta-like:
+
+#+begin_src clojure
+  storage.core> (set-value! config :ldap {:hostname "localhost" :port 10389})
+  true
+
+  storage.core> (get-value config)
+  {:ldap {:hostname "localhost", :port 10389}}
+
+  storage.core> (set-value! config [:ldap :dn] "uid=%s,ou=system")
+  true
+
+  storage.core> (get-value config)
+  {:ldap {:dn "uid=%s,ou=system", :hostname "localhost", :port 10389}}
+
+  storage.core> (get-value config :ldap)
+  {:dn "uid=%s,ou=system", :hostname "localhost", :port 10389}
+
+  storage.core> (get-value config [:ldap :dn])
+  "uid=%s,ou=system"
+#+end_src
+
 ** Considerations
 
 Just an experiment!

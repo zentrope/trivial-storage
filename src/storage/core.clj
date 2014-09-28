@@ -48,6 +48,8 @@
       (try
         (case (:op msg)
           :init (read! store)
+          :reset (do (reset! (:cache store) (:val msg))
+                     (write! store))
           :save (do (update! store (:kws msg) (:val msg))
                     (write! store)))
         (catch Throwable t
@@ -61,8 +63,10 @@
 ;;-----------------------------------------------------------------------------
 
 (defn set-value!
-  [store kws value]
-  (put! (:ch store) {:op :save :kws kws :val value}))
+  ([store value]
+     (put! (:ch store) {:op :reset :val {}}))
+  ([store kws value]
+     (put! (:ch store) {:op :save :kws kws :val value})))
 
 (defn get-value
   ([store]
@@ -88,6 +92,8 @@
 
   (def fname "test-store.clj")
   (.delete (io/as-file fname))
+
+
   (def config (mk-storage fname))
 
   (initialize! config)
