@@ -6,6 +6,8 @@ by a set of keys (as a path).
 Sorta-like:
 
 #+begin_src clojure
+  storage.core> (def config (mk-storage "config.clj"))
+
   storage.core> (set-value! config :ldap {:hostname "localhost" :port 10389})
   true
 
@@ -25,7 +27,7 @@ Sorta-like:
   "uid=%s,ou=system"
 #+end_src
 
-** Considerations
+** Considerations:
 
 Just an experiment!
 
@@ -41,6 +43,21 @@ there is because:
 
  - Really, this is more like a config-server or database-backed
    resource management library.
+
+** Fun little extensions:
+
+ - Allow getting values via a string: ~(get-value store "/ldap/dn")~.
+
+ - Discourage non-map values ~(set-value! store :key value)~?
+
+ - Notify on change? Supply a channel with a path and get messages
+   when that path changes?
+
+ - Encryption
+
+ - Decide which cases to cover, which not (for value types).
+
+ - Close and/or reset the storage.
 
 ** License
 
