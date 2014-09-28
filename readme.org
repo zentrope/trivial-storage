@@ -1,0 +1,28 @@
+* trivial-storage
+
+Store a tree of values in a single file and retrieve them by key, or
+by a set of keys (as a path).
+
+** Considerations
+
+Just an experiment!
+
+One way to do this is to implement the various mapping interfaces so
+that I could have a "disk-based" map. The reason I don't want to start
+there is because:
+
+ - Maps should be purely functional, but in this case, each "assoc" to
+   a map gets written to a file. Seems a kind of violation.
+
+ - I want to make it super clear that this thing shouldn't be used
+   like a regular map because of the write-to-disk side-effect.
+
+ - Really, this is more like a config-server or database-backed
+   resource management library.
+
+** License
+
+Copyright (c) 2014 Keith Irwin
+
+Distributed under the Eclipse Public License either version 1.0 or (at
+your option) any later version.
